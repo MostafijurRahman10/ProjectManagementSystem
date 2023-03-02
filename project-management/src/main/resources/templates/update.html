@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body style="max-width: 960px; margin: 16px auto; padding: 16px">
+
+
+<h3>Project List</h3>
+
+<!-- The link which sends GET request to "/showNewEmployeeForm"/projects  -->
+<a th:href="@{/user/project}"
+   class="waves-effect waves-light btn">Add New Project</a>
+<a th:href="@{/user/dateAndRange}"
+   class="waves-effect waves-light btn">Date Range Projects</a>
+
+
+<div align="center" style="margin-top: 20px">
+    <table class="responsive-table striped highlight centered">
+        <thead>
+        <tr>
+            <th>ProjectName</th>
+            <th>Intro</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th>Start Date </th>
+            <th>End Date </th>
+            <th>Members</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="project: ${project}">
+            <td th:text="${project.projectName}"></td>
+            <td th:text="${project.intro}"></td>
+            <td th:text="${project.owner}"></td>
+            <td th:text="${project.status}"></td>
+            <td th:text="${project.startDateTime}"></td>
+            <td th:text="${project.endDateTime}"></td>
+            <th:block th:if="${project.projectMembers}">
+                <td>
+                    <p th:each="member : ${project.projectMembers}" >[[${member.userName}]]</br></p>
+                </td>
+            </th:block>
+
+
+
+
+            <td>
+                <a th:href="@{/user/updateForm/{id}(id=${project.projectid})}"
+                   class="waves-effect waves-light btn">Update</a>
+            </td>
+            <td>
+                <!-- The link which sends GET request to "/delete/{id}" (id is employee.id)  -->
+                <a th:href="@{/user/deleteProject/{id}(id=${project.projectid})}"
+                   class="waves-effect waves-light btn red litghten-2">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
